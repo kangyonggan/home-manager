@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kangyonggan.hmgr.mapper.ArticleIndexMapper">
+    <resultMap id="BaseResultMap" type="com.kangyonggan.hmgr.model.ArticleIndex">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="article_id" property="articleId" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="LONGVARCHAR"/>
+        <result column="category_name" property="categoryName" jdbcType="LONGVARCHAR"/>
+        <result column="body" property="body" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+</mapper>

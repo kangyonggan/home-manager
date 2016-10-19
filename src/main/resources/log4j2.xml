@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="300">
+    <properties>
+        <property name="LOG_HOME">/Users/kyg/logs/hmgr/</property>
+        <property name="ALL_FILE_NAME">hmgr</property>
+        <property name="ERROR_FILE_NAME">hmgr-error</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%logger{36}.%t:%L] - %msg%n"/>
+        </Console>
+        <RollingRandomAccessFile name="AllFile" fileName="${LOG_HOME}/${ALL_FILE_NAME}-all.log"
+                                 filePattern="${LOG_HOME}/${ALL_FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%logger{36}.%t:%L] - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+            <Filters>
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="ErrorFile" fileName="${LOG_HOME}/${ERROR_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${ERROR_FILE_NAME}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%logger{36}.%t:%L] - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+            <Filters>
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+        <Async name="AsyncAll">
+            <AppenderRef ref="AllFile"/>
+        </Async>
+        <Async name="AsyncError">
+            <AppenderRef ref="ErrorFile"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Root level="debug" additivity="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncAll"/>
+            <AppenderRef ref="AsyncError"/>
+        </Root>
+    </Loggers>
+</Configuration>
